@@ -2,7 +2,7 @@ import { FaGoogle } from "react-icons/fa";
 
 const SignUp = () => {
     const handleLogin = () => {
-        // window.location.href = "http://localhost:5000/auth/google";
+        window.location.href = "http://localhost:5000/auth/google";
         console.log("Signed In")
     };
     return ( 

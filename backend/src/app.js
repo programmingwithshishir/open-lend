@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import session from "express-session";
 import passport from './configs/passport.js';
 import GoogleAuthRoutes from "./routes/auth.routes.js";
+import onboardRoutes from "./routes/onboard.routes.js"
 
 const app = express();
 const server = createServer(app);
@@ -40,7 +41,17 @@ app.get("/", (req, res) => {
     res.status(200).json({ message: "Server is running" });
 });
 
+//middle ware 
+export const middle = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    console.log("not authenticated");
+    res.redirect(`${process.env.FRONTEND_URL}/signup`);
+}
+
 app.use("/auth", GoogleAuthRoutes);
+app.use("/onboard", middle, onboardRoutes);
 
 //listening to the server
 const PORT = process.env.PORT || 5000;
